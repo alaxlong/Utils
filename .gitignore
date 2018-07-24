@@ -1,0 +1,8 @@
+*.iml
+logs/
+.idea/
+target/
+log.config
+
+# yourself config
+application-local.properties
