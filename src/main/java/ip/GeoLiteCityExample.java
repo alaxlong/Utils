@@ -12,8 +12,32 @@ import java.net.UnknownHostException;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
+/**
+ * 通过IP，离线解析城市
+ */
+
 public class GeoLiteCityExample {
     public static final String GEO_LITE_FILE_LOCATION = "D:\\IdeaProjects\\All-Class\\src\\main\\resources\\assets\\GeoLiteCity.dat";
+
+    public static void main(String[] args){
+        GeoLiteCityExample example = new GeoLiteCityExample();
+        String ip = "122.144.218.13";
+        String cityName = example.getCityName(ip);
+        // Hangzhou
+        System.out.println(cityName);
+
+        try {
+            InetAddress inetAddress = InetAddress.getByName(ip);
+            cityName = example.getCityName(inetAddress);
+            // Hangzhou
+            System.out.println(cityName);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        LookupService lookupService = example.getLookUpService(ip);
+        System.out.println(lookupService.getOrg(ip) + "***" + lookupService.getRegion(ip).region);
+    }
 
     public String getCityName(String ip) {
         try {
@@ -53,23 +77,5 @@ public class GeoLiteCityExample {
         }
         return "";
     }
-    public static void main(String[] args){
-        GeoLiteCityExample example = new GeoLiteCityExample();
-        String ip = "122.144.218.13";
-        String cityName = example.getCityName(ip);
-        // Hangzhou
-        System.out.println(cityName);
 
-        try {
-            InetAddress inetAddress = InetAddress.getByName(ip);
-            cityName = example.getCityName(inetAddress);
-            // Hangzhou
-            System.out.println(cityName);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
-        LookupService lookupService = example.getLookUpService(ip);
-        System.out.println(lookupService.getOrg(ip) + "***" + lookupService.getRegion(ip).region);
-    }
 }

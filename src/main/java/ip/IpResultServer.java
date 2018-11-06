@@ -24,11 +24,11 @@ public class IpResultServer {
         IpGeoConst2 ipGeoConst2 = new IpGeoConst2();
         ipGeoConst2.geoDataFromMem(ip);
 
-        //ip解析城市
-        Map<String,String> prm=new HashMap<String, String>();
+        //ip解析城市，淘宝IP解析
+        /*Map<String,String> prm=new HashMap<String, String>();
         prm.put("ip", ip);
         String  bodynew = HttpClientUtil.doGet("http://ip.taobao.com/service/getIpInfo.php",prm);
-        System.out.println(JSON.parseObject(bodynew));
+        System.out.println(JSON.parseObject(bodynew));*/
 
         //调用jar包nutz-1.r.65.jar，TaobaoIP.jar
         TaobaoIPResult result =  TaobaoIP.getResult("69.171.71.32");
