@@ -1,7 +1,7 @@
+package test;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.elevoc.sdk3rd.taobaoip.TaobaoIP;
-import com.elevoc.sdk3rd.taobaoip.TaobaoIPResult;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -9,18 +9,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import util.HttpClientUtil;
-import util.IpGeoConst2;
-import util.PageUtil;
-import org.nutz.http.Http;
-import org.nutz.http.Response;
-import org.nutz.json.Json;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * \* Created with IntelliJ IDEA.

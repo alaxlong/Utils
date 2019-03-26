@@ -5,7 +5,17 @@
   <version>1.0-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <properties>
-    <scala.version>2.7.0</scala.version>
+    <scala.version>2.11.8</scala.version>
+    <hadoop.version>2.6.4</hadoop.version>
+    <spark.version>2.1.1</spark.version>
+    <hbase.version>1.2.6</hbase.version>
+    <hive.version>2.3.3</hive.version>
+    <!--<elasticsearch.version>5.6.8</elasticsearch.version>-->
+    <elasticsearch.version>6.4.0</elasticsearch.version>
+    <jest.version>5.3.3</jest.version>
+    <https.version>4.4</https.version>
+    <libfb303.version>0.9.3</libfb303.version>
+
   </properties>
 
   <repositories>
@@ -28,7 +38,7 @@
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
-      <version>2.11.8</version>
+      <version>${scala.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -43,75 +53,213 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>${hadoop.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-jdbc</artifactId>
+      <version>${hive.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-common</artifactId>
+      <version>${hive.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-metastore</artifactId>
+      <version>${hive.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+      <artifactId>hive-service</artifactId>
+      <version>${hive.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${https.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>${https.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.thrift</groupId>
+      <artifactId>libfb303</artifactId>
+      <version>${libfb303.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.thrift</groupId>
+      <artifactId>libthrift</artifactId>
+      <version>${libfb303.version}</version>
+    </dependency>
+
+
+
+
+
 
     <!--########################ADD#############################-->
+
+    <!--<dependency>
+      <groupId>io.searchbox</groupId>
+      <artifactId>jest</artifactId>
+      <version>${jest.version}</version>
+    </dependency>-->
+    <dependency>
+      <groupId>io.searchbox</groupId>
+      <artifactId>jest</artifactId>
+      <version>${jest.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+
+    <!--使用lombok，对于Java Bean对象，就不用手动添加getter和setter方法，在编译时，它会帮我们自动添加-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.10</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.elasticsearch.client</groupId>
+      <artifactId>transport</artifactId>
+      <version>${elasticsearch.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch-hadoop</artifactId>
+      <version>6.4.0</version>
+    </dependency>
+
+    <!--*******************#### spark ####********************-->
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming_2.11</artifactId>
-      <version>2.1.1</version>
-      <scope>provided</scope>
+      <artifactId>spark-core_2.11</artifactId>
+      <version>${spark.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-sql_2.11</artifactId>
-      <version>2.1.1</version>
-      <scope>provided</scope>
+      <version>${spark.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_2.11</artifactId>
-      <version>2.1.1</version>
+      <artifactId>spark-hive_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming_2.11</artifactId>
+      <version>${spark.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
-      <version>2.1.1</version>
+      <version>${spark.version}</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.yammer.metrics/metrics-core -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-graphx_2.11</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>graphframes</groupId>
+      <artifactId>graphframes</artifactId>
+      <version>0.6.0-spark2.2-s_2.11</version>
+    </dependency>
+    <dependency>
+      <groupId>org.graphstream</groupId>
+      <artifactId>gs-core</artifactId>
+      <version>1.3</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.graphstream/gs-ui -->
+    <dependency>
+      <groupId>org.graphstream</groupId>
+      <artifactId>gs-ui</artifactId>
+      <version>1.3</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.graphstream/gs-algo -->
+    <dependency>
+      <groupId>org.graphstream</groupId>
+      <artifactId>gs-algo</artifactId>
+      <version>1.3</version>
+    </dependency>
+
+    <!--*******************#### hadoop ####********************-->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>${hadoop.version}</version>
+    </dependency>
+
+    <!--*******************#### hbase ####********************-->
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase-client</artifactId>
+      <version>${hbase.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase-server</artifactId>
+      <version>${hbase.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>com.yammer.metrics</groupId>
       <artifactId>metrics-core</artifactId>
       <version>2.2.0</version>
     </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.codehaus.jettison/jettison -->
     <dependency>
       <groupId>org.codehaus.jettison</groupId>
       <artifactId>jettison</artifactId>
       <version>1.3.5</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-pool2</artifactId>
       <version>2.4</version>
     </dependency>
-
-    <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>1.8.3</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.1.2</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <version>3.2</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/net.sf.ezmorph/ezmorph -->
     <dependency>
       <groupId>net.sf.ezmorph</groupId>
       <artifactId>ezmorph</artifactId>
@@ -129,7 +277,7 @@
       <version>5.1.32</version>
     </dependency>
 
-    <!--**********  mongo ***************-->
+    <!--*******************#### mongoDB ####********************-->
     <!--在导入的jar包存在两个MongoClient类，一个来自于mongo-java-driver.jar的com.mongodb.MongoClient，
     另一个来自于casbah-core_2.12:3.1.1.jar的com.mongodb.casbah.MongoClient.前者是用于java调用，Scala使用后者-->
     <dependency>
@@ -163,35 +311,88 @@
       <version>1.2.15</version>
     </dependency>
 
-    <!--**********  hbase  ***************-->
+    <!--aliyun SMS-->
     <dependency>
-      <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase-client</artifactId>
-      <version>1.1.11</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hbase</groupId>
-      <artifactId>hbase-server</artifactId>
-      <version>1.1.11</version>
+      <groupId>com.aliyun</groupId>
+      <artifactId>aliyun-java-sdk-core</artifactId>
+      <version>3.7.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.aliyun</groupId>
+      <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>javax.mail-api</artifactId>
+      <version>1.6.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>2.0.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scalaj</groupId>
+      <artifactId>scalaj-http_2.11</artifactId>
+      <version>2.3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe</groupId>
+      <artifactId>config</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-actor_2.11</artifactId>
+      <version>2.5.11</version>
+    </dependency>
+
+    <!-- 日志依赖 -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.21</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.21</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+    <dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.8.2</version>
+  </dependency>
+
+    <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <dependency>
+      <groupId>net.sourceforge.javacsv</groupId>
+      <artifactId>javacsv</artifactId>
+      <version>2.0</version>
+    </dependency>
 
 
 
@@ -201,6 +402,23 @@
   <build>
     <sourceDirectory>src/main/scala</sourceDirectory>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.4</version>
+        <configuration>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.scala-tools</groupId>
         <artifactId>maven-scala-plugin</artifactId>

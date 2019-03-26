@@ -18,7 +18,6 @@ final object MD5 {
       b.append(hexDigits(encrypt(i) >>> 4 & 0xf)).append(hexDigits(encrypt(i) & 0xf))
     }
     b.mkString
-
   }
 
   def main(args: Array[String]) {

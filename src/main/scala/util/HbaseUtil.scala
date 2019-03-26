@@ -11,6 +11,7 @@ import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp
 import org.apache.hadoop.hbase.filter._
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -18,11 +19,12 @@ import scala.collection.mutable.ArrayBuffer
   */
 
 object HbaseUtil {
-  private val conf: Configuration = ConfigUtil.apply.createHbaseConfig
-//  private val conf = HBaseConfiguration.create()
-//  conf.set("hbase.zookeeper.quorum", "10.10.10.127,10.10.10.128,10.10.10.129")
-//  conf.set("hbase.zookeeper.property.clientPort", "2181")
-//  conf.addResource("hbase-site.xml")
+  private final val conf: Configuration = ConfigUtil.apply.createHbaseConfig
+  //  private val conf = HBaseConfiguration.create()
+  //  conf.set("hbase.zookeeper.quorum", "139.219.5.86")
+  //  conf.set("hbase.zookeeper.property.clientPort", "2181")
+  //  conf.set("zookeeper.znode.parent", "/hbase")
+  //  conf.addResource("hbase-site.xml")
 
   /**
     * 查询表是否存在
@@ -83,7 +85,7 @@ object HbaseUtil {
   def addRow(tableName: String, row: String, columnFaily: String, column: String, value: String): Unit = {
     val table: HTable = new HTable(conf, tableName)
     val put: Put = new Put(Bytes.toBytes(row))
-    put.add(Bytes.toBytes(columnFaily), Bytes.toBytes(column), Bytes.toBytes(value))
+    put.add(columnFaily.getBytes(), Bytes.toBytes(column), Bytes.toBytes(value))
     table.put(put)
   }
 
@@ -139,33 +141,19 @@ object HbaseUtil {
   def getAllRows(tableName: String): util.Iterator[Result] = {
     val table: HTable = new HTable(conf, tableName)
     val scan = new Scan()
-//    scan.setBatch(1)
-//    scan.setCacheBlocks(true)
+    //    scan.setBatch(1)
+    //    scan.setCacheBlocks(true)
     scan.setCaching(5000)
-//    scan.setMaxVersions(1)
-//    scan.setStartRow(Bytes.toBytes("8449_e4f0b228f78cde83befc8251d935cb1d"))
-    //af53_FFE95448-8604-4E58-BE92-0117177F9FDC   2017-11-20
-//    scan.setStartRow(Bytes.toBytes("1d91_818d258e68c56b3e6baeb38f3c222fa4"))
-
-//    e631_9d59adc0881ff9d67d8f59a0d6fce6ef
-
-    scan.setStartRow(Bytes.toBytes("16de_9F393D1E-C0F6-464C-B460-A095F7696F37"))
-//
-//    scan.setStopRow(Bytes.toBytes("1510_2C3F6EAB3141F5CCD12C0D9C1DCCD693"))
-
-//    scan.setStopRow(Bytes.toBytes("af53_G9eGc0ETScL6"))
-//    scan.setStopRow(Bytes.toBytes("9999_"))
-//    scan.setRowPrefixFilter(Bytes.toBytes("0000_9"))
-
-//    scan.setMaxVersions(1)
-//    val results: ResultScanner = table.getScanner(new Scan())
-//    scan.setStartRow(Bytes.toBytes("faff_a"))
+    //    scan.setStartRow(Bytes.toBytes("16de_9F393D1E-C0F6-464C-B460-A095F7696F37"))
+    //    scan.setStopRow(Bytes.toBytes("af53_G9eGc0ETScL6"))
+    //    scan.setRowPrefixFilter(Bytes.toBytes("0000_9"))
+    //    scan.setMaxVersions(1)
     //倒叙
-//    scan.setReversed(true)
+    //    scan.setReversed(true)
     //过滤器
-//    val rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("tag")))
-    val qualifier = new QualifierFilter(CompareOp.NOT_EQUAL, new BinaryComparator(Bytes.toBytes("p")))
-    scan.setFilter(qualifier)
+    //    val rowFilter = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(Bytes.toBytes("tag")))
+    //    val qualifier = new QualifierFilter(CompareOp.NOT_EQUAL, new BinaryComparator(Bytes.toBytes("p")))
+    //    scan.setFilter(qualifier)
 
     val results: ResultScanner = table.getScanner(scan)
     val it: util.Iterator[Result] = results.iterator()
@@ -174,64 +162,51 @@ object HbaseUtil {
 
 
   def main(args: Array[String]) {
-    //TestHbaeJavaApi.createTable("testApi",Array("info","two"))
-    //TestHbaeJavaApi.addRow("testApi","row2","info","get","getTwo")
-    //TestHbaeJavaApi.delRow("testApi","row2")
-//    HbaseUtil.this.getRow("dxp:mz_tag","1510_0f13404ec64077a8f9aa8fe7161a20e0")
-//    HbaseUtil.this.getRow("test","1")
-//    val it = HbaseUtil.getAllRows("dxp:mz_tag")
-
-    val it = HbaseUtil.getAllRows("dxp:mz_tag")
-    var sum = 0
+    val it = HbaseUtil.getAllRows("offset")
     println(new String(it.next().getRow))
     val startUpdate = System.currentTimeMillis()
-    while (it.hasNext) {
-      sum += 1
-      println("Hbase count:" + sum)
-      if (sum == 1000000){
-        println("数据完成，共耗时："+(System.currentTimeMillis() - startUpdate)+"毫秒")
-        //10W 数据完成，共耗时：6779毫秒
-        //100W 数据完成，共耗时：69265毫秒
-        //10W spark 数据完成，共耗时：38076毫秒
-        //100W spark 数据完成，共耗时：221517毫秒
-        System.exit(1)
-      }
-      val next: Result = it.next()
-//      println("*************")
-      for (kv <- next.raw()) {
-        val str = new String(kv.getRow)
-        println("Row: " + new String(kv.getRow))
-        println("Family: " + new String(kv.getFamily))
-        println("Qualifier: " + new String(kv.getQualifier))
-        println(new String(kv.getValue))
-//        println(kv.getTimestamp)
-        println("---------------------------------")
-      }
-    }
-
-    //------------------------------------------------
-    /*val table: HTable = new HTable(conf, "dxp:mz_tag")
-    val scan = new Scan()
-    scan.setBatch(1)
-    scan.setCaching(3000)
-    val results: ResultScanner = table.getScanner(scan)*/
-
-    /*val it = results.iterator()
-    while (it.hasNext){
-      val next = it.next()
-      println("******************")
-    for (i <- next.raw()) {
-        println(new String(i.getRow))
-        println(new String(i.getFamily))
-        println(new String(i.getQualifier))
-        println(new String(i.getValue))
-        /*val row = new String(i.getRow)
-        HbaseUtil.getRow("dxp:mz_tag", row)*/
-      println("--------------------------------------")
-      }
+    val next: Result = it.next()
+    //      println("*************")
+    /*for (kv <- next.raw()) {
+      val str = new String(kv.getRow)
+      println("Row: " + new String(kv.getRow))
+      println("Family: " + new String(kv.getFamily))
+      println("Qualifier: " + new String(kv.getQualifier))
+      println("value: " + new String(kv.getValue))
+      //        println(kv.getTimestamp)
+      println("---------------------------------")
     }*/
 
-
+    next.rawCells().foreach(kv => {
+      println(new String(CellUtil.cloneRow(kv)))
+      println(new String(CellUtil.cloneFamily(kv)))
+      println(new String(CellUtil.cloneQualifier(kv)))
+      println(new String(CellUtil.cloneValue(kv)))
+      println(kv.getTimestamp)
+      println("---------------------------------")
+    })
 
   }
+
+  //------------------------------------------------
+  /*val table: HTable = new HTable(conf, "dxp:mz_tag")
+  val scan = new Scan()
+  scan.setBatch(1)
+  scan.setCaching(3000)
+  val results: ResultScanner = table.getScanner(scan)*/
+
+  /*val it = results.iterator()
+  while (it.hasNext){
+    val next = it.next()
+    println("******************")
+  for (i <- next.raw()) {
+      println(new String(i.getRow))
+      println(new String(i.getFamily))
+      println(new String(i.getQualifier))
+      println(new String(i.getValue))
+      /*val row = new String(i.getRow)
+      HbaseUtil.getRow("dxp:mz_tag", row)*/
+    println("--------------------------------------")
+    }
+  }*/
 }

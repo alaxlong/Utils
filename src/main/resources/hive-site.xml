@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?><!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+
+<configuration>
+
+
+<property>
+	<name>javax.jdo.option.ConnectionURL</name>
+	<value>jdbc:mysql://AZ-DEV-HIVE1:3306/hive?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;createDatabaseIfNotExist=true</value>
+</property>
+
+<property>
+	<name>javax.jdo.option.ConnectionDriverName</name>
+	<value>com.mysql.jdbc.Driver</value>
+</property>
+
+<property>
+	<name>javax.jdo.option.ConnectionUserName</name>
+	<value>hive</value>
+</property>
+
+<property>
+	<name>javax.jdo.option.ConnectionPassword</name>
+	<value>hive123</value>
+</property>
+
+<property>
+	<name>hive.exec.scratchdir</name>
+	<value>/home/az-user/apps/data/hive/hive-${user.name}</value>
+</property>
+
+<property>
+	<name>hive.exec.parallel</name>
+	<value>true</value>
+</property>
+
+<property>
+	<name>hive.exec.parallel.thread.number</name>
+	<value>24</value>
+</property>
+
+<!-- print column name
+<property>
+<name>hive.cli.print.header</name>
+<value>true</value>
+</property>
+-->
+
+
+<property>
+	<name>hive.cli.print.row.to.vertical</name>
+	<value>true</value>
+</property>
+
+<property>
+	<name>hive.cli.print.current.db</name>
+	<value>true</value>
+</property>
+
+<property>
+	<name>hive.auto.convert.join</name>
+	<value>true</value>
+	<description>automatically enable mapside join</description>
+</property>
+
+<property>
+	<name>hive.mapjoin.smalltable.filesize</name>
+	<value>25000000</value>
+	<description>small table size (bytes)</description>
+</property>
+
+<property>
+	<name>hive.exec.dynamic.partition</name>
+	<value>true</value>
+	<description>enable dynamic partition</description>
+</property>
+
+<property>
+	<name>hive.exec.dynamic.partition.mode</name>
+	<value>strict</value>
+	<description>whether or not allow all the partitions are dynamic</description>
+</property>
+
+<property>
+	<name>hive.mapred.mode</name>
+	<value>nostrict</value>
+</property>
+
+<property>
+	<name>hive.hwi.listen.host</name>
+	<value>10.0.3.6</value>
+	<description>This is the host address the Hive Web Interface will listen on</description>
+</property>
+
+<property>
+	<name>hive.hwi.listen.port</name>
+	<value>9999</value>
+	<description>This is the port the Hive Web Interface will listen on</description>
+</property>
+
+<property>
+	<name>hive.support.concurrency</name>
+	<description>Enable Hive's Table Lock Manager Service</description>
+	<value>true</value>
+</property>
+
+<property>
+	<name>hive.zookeeper.quorum</name>
+	<description>Zookeeper quorum used by Hive's Table Lock Manager</description>
+	<value>AZ-DEV-HIVE1,AZ-DEV-HIVE2,AZ-DEV-HIVE3</value>
+</property>
+
+<property>
+	<name>hive.zookeeper.client.port</name>
+	<value>2181</value>
+</property>
+
+
+
+<property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://az-dev-hive1:9083</value>
+</property>
+
+<property>
+        <name>hive.server2.thrift.min.worker.threads</name>
+        <value>5</value>
+</property>
+
+<property>
+        <name>hive.server2.thrift.max.worker.threads</name>
+        <value>500</value>
+</property>
+
+<property>
+        <name>hive.server2.thrift.port</name>
+        <value>10000</value>
+</property>
+
+
+<property>
+        <name>hive.server2.thrift.bind.host</name>
+        <value>az-dev-hive1</value>
+</property>
+
+
+
+
+</configuration>
+

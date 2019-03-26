@@ -94,7 +94,7 @@ public class HBaseScanUtil {
         //-- 4 --查找所有版本大于一个阈值的所有rowkey的计数
 //        countBiggerThanLimitVer("es_inner", "cf", "province", 1);
 
-        getSpecialColumns("es_inner", "cf");
+        getSpecialColumns("users", "cf");
     }
 
     /**

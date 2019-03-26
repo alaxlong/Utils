@@ -1,5 +1,8 @@
 import com.alibaba.fastjson.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +22,29 @@ public class Test {
 //        Map<String, Object> map = t.jsonToMap(json);
 //        System.out.println(map);
         System.out.println("ssss");
-}
+        double a = 7;
+        int b = 10;
+        System.out.println(Math.ceil(a/b));
+
+        IpServiceConfig.host = "127.0.0.1:8080";
+        System.out.println(IpServiceConfig.host);
+        IpServiceConfig.host = "ssss";
+        System.out.println(IpServiceConfig.host);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("127.0.0.1", "88");
+        System.out.println(map.keySet().toArray()[0]);
+        System.out.println(map.values().toArray()[0]);
+
+        String str="2018-04-17 01:48:41";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse(str);
+            System.out.println(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /*//json 消息转成Map结构
